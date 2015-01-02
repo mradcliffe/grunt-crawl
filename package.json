@@ -29,8 +29,7 @@
   "dependencies": {
     "URIjs": "^1.14.1",
     "data2xml": "^1.2.0",
-    "node-phantom": "git+https://github.com/leobispo/node-phantom#socket_io_version",
-    "underscore": "~1.6.0"
+    "node-phantom": "git+https://github.com/leobispo/node-phantom#socket_io_version"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
