@@ -1,6 +1,6 @@
 # grunt-crawl
 
-> Crawl a site with PhantomJS.
+> PhantomJS-based web crawler with support for sitemap, static content, and fragment routing.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -24,63 +24,97 @@ In your project's Gruntfile, add a section named `crawl` to the data object pass
 
 ```js
 grunt.initConfig({
-  crawl: {
-    options: {
-      // Task-specific options go here.
+  "crawl": {
+    "options": {
+      "baseUrl": "http://example.com",
+      "content": true,
+      "contentDir": "www/static",
+      "readySelector": ".main-wrapper",
+      "depth": 4,
+      "viewportWidth": 1280,
+      "viewportHeight": 1024
     },
-    your_target: {
-      // Target-specific file lists and/or options go here.
+    "angular": {
+      "followFragment": true,
+      "fragmentPrefix": "!",
     },
+    "sitemap": {
+      "sitemap": true,
+      "sitemapDir": "www"
+    }
   },
 });
 ```
 
 ### Options
 
-#### options.separator
+#### options.baseUrl
 Type: `String`
-Default value: `',  '`
+Default value: `'http://localhost:9000'`
 
-A string value that is used to do something with whatever.
+The base URL of your web site to crawl.
 
-#### options.punctuation
+#### options.content
+Type: `Boolean`
+Default value: `true`
+
+A boolean value where `true` will save static content for each page.
+
+#### options.contentDir
 Type: `String`
-Default value: `'.'`
+Default value: `www/static`
 
-A string value that is used to do something else with whatever else.
+The directory path to save static content when content saving is enabled.
+
+#### options.sitemap
+Type: `Boolean`
+Default value: `false`
+
+A boolean value where `true` will create a sitemap.xml for your site.
+
+### options.sitemapDir
+Type: `String`
+Default value: `www`
+
+The directory path to write `sitemap.xml`.
+
+### options.readySelector
+Type: `String`
+Default value: `.main-wrapper`
+
+The selector to search for `data-status` attribute on each web page. The `data-status` attribute should be set to `"ready"`. This option is required although for static pages you can set the attribute manually to ready.
+
+### options.depth
+Type: `Integer`
+Default value: `2`
+
+The depth limit for the web crawler. Anything greater than 5 may exceed the current interval setting in the task.
+
+### options.viewportWidth
+Type: `Integer`
+Default value: `1280`
+
+The width that PhantomJS will use for its viewport.
+
+### options.viewportHeight
+Type: `Integer`
+Default value: `1024`
+
+The height that PhantomJS will use for its viewport.
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+#### Static Content
 
-```js
-grunt.initConfig({
-  crawl: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
+- @todo
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+#### Sitemap
 
-```js
-grunt.initConfig({
-  crawl: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
+- @todo
+
+#### Fragment Routing
+
+- @todo
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
