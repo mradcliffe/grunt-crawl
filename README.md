@@ -33,16 +33,8 @@ grunt.initConfig({
       "depth": 4,
       "viewportWidth": 1280,
       "viewportHeight": 1024
-    },
-    "angular": {
-      "followFragment": true,
-      "fragmentPrefix": "!",
-    },
-    "sitemap": {
-      "sitemap": true,
-      "sitemapDir": "www"
     }
-  },
+  }
 });
 ```
 
@@ -104,17 +96,89 @@ The height that PhantomJS will use for its viewport.
 
 ### Usage Examples
 
-#### Static Content
+- Any same origin url will be crawled once including:
+   - relative (e.g. `about.html`)
+   - absolute urls (e.g. `http://example.com/about.html`)
+   - fragment-routing urls (e.g. `http://example.com/#!/about`)
 
-- @todo
+#### Data Status / Ready Selector
+
+The general idea behind this is that if your site requires Javascript to fill-in content or other data, then a crawler must wait until the page has finished loading. Thus your site should set the `data-status` attribute to `ready` for the selector defined in `options.readySelector`.
+
+##### An AngularJS example:
+
+Inside app.run:
+```js
+$rootScope.ready = function() {
+  var $scope = _getTopScope();
+  $scope.status = 'ready';
+  if (!$scope.$$phase) $scope.$apply();
+}
+
+$rootScope.loading = function() {
+  var $scope = _getTopScope();
+  $scope.status = 'loading';
+  if (!$scope.$$phase) $scope.$apply();
+}
+```
+
+In controller:
+```js
+$scope.ready();
+```
+
+In index.html:
+```html
+<div ng-view class="main-wrapper" data-status="{{status}}"></div>
+```
 
 #### Sitemap
 
-- @todo
+```js
+grunt.initConfig({
+  "crawl": {
+    "sitemap": {
+      "sitemap": true,
+      "sitemapDir": "www"
+    }
+  }
+}
+```
+
+- Todo: provide a way to prioritize routes. All priorities set the same. Possibly auto-adjust by depth?
+- Todo: provide a better last modification time. Currently all urls will have last modifications updated at the same time.
 
 #### Fragment Routing
 
-- @todo
+AngularJS and other Javascript apps that depend on fragment routing are supported. Fragment-based routes will be saved as static content, if enabled, with the content file having the `.html` suffix.
+
+```js
+grunt.initConfig({
+  "crawl": {
+    "myapp": {
+      "followFragment": true,
+      "fragmentPrefix": "!"
+    }
+  }
+}
+```
+
+Rewrite rules for fragment route to static content:
+
+```apache
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Search Engine rewrite
+  RewriteCond %{QUERY_STRING} ^_escaped_fragment_=/?$
+  RewriteRule ^.*$ /static/index.html [NC,L]
+
+  RewriteCond %{REQUEST_URI} index\.html$
+  RewriteCond %{QUERY_STRING} ^_escaped_fragment_=/([a-zA-Z0-9\/_\-]+)$
+  RewriteRule ^(.*)$ /static/%1.html [NC,L]
+</IfModule>
+```
+
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
