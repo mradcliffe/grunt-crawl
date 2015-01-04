@@ -24,15 +24,17 @@ In your project's Gruntfile, add a section named `crawl` to the data object pass
 
 ```js
 grunt.initConfig({
-  "crawl": {
-    "options": {
-      "baseUrl": "http://example.com",
-      "content": true,
-      "contentDir": "www/static",
-      "readySelector": ".main-wrapper",
-      "depth": 4,
-      "viewportWidth": 1280,
-      "viewportHeight": 1024
+  crawl: {
+    live: {
+      options: {
+        baseUrl: "http://example.com",
+        content: true,
+        contentDir: "www/static",
+        readySelector: ".main-wrapper",
+        depth: 4,
+        viewportWidth: 1280,
+        viewportHeight: 1024
+      }
     }
   }
 });
@@ -64,31 +66,43 @@ Default value: `false`
 
 A boolean value where `true` will create a sitemap.xml for your site.
 
-### options.sitemapDir
+#### options.sitemapDir
 Type: `String`
 Default value: `www`
 
 The directory path to write `sitemap.xml`.
 
-### options.readySelector
+#### options.followFragment
+Type: `Boolean`
+Default value: `false`
+
+A boolean value where `true` will crawl fragment routes as well.
+
+#### options.fragmentPrefix
+Type: `String`
+Default value: `!`
+
+The fragment prefix to use for fragment routing. `!` will look for routes similar to `#!/`. See below for more details.
+
+#### options.readySelector
 Type: `String`
 Default value: `.main-wrapper`
 
 The selector to search for `data-status` attribute on each web page. The `data-status` attribute should be set to `"ready"`. This option is required although for static pages you can set the attribute manually to ready.
 
-### options.depth
+#### options.depth
 Type: `Integer`
-Default value: `2`
+Default value: `4`
 
 The depth limit for the web crawler. Anything greater than 5 may exceed the current interval setting in the task.
 
-### options.viewportWidth
+#### options.viewportWidth
 Type: `Integer`
 Default value: `1280`
 
 The width that PhantomJS will use for its viewport.
 
-### options.viewportHeight
+#### options.viewportHeight
 Type: `Integer`
 Default value: `1024`
 
