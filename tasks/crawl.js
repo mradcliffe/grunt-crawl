@@ -39,27 +39,29 @@ module.exports = function(grunt) {
             crawler = new Crawler(options.baseUrl, options.depth);
 
             // Setup options onto crawler object.
-            crawler.setOptions(options);
-
-            crawler.crawl(crawler.url, 0);
+            crawler.setOptions(options).startCrawling();
 
             finishCrawl = function() {
                 // Do the file operations now.
                 if (crawler.doneCrawling) {
                     clearInterval(wait);
+                    crawler.stopCrawling();
 
-                    if (crawler.crawledUrls.length > 0) {
+                    if (crawler.crawledUrls.length !== null && crawler.crawledUrls.length > 0) {
 
                         crawler.crawledUrls.forEach(function(page) {
+                            var relativeUrl = crawler.getRelativePath(page.url);
+                            var absoluteUrl = crawler.getAbsoluteUrl(page.url);
+
                             // Save static content.
                             if (options.content) {
-                                grunt.file.write(options.contentDir + page.url, page.content);
-                                grunt.log.ok(" - Content: " + options.contentDir + page.url);
+                                grunt.file.write(options.contentDir + relativeUrl, page.content);
+                                grunt.log.ok(" - Content: " + options.contentDir + relativeUrl);
                             }
 
                             // Add to sitemap urls.
                             if (options.sitemap) {
-                                crawler.addUrlToSitemap(page.url);
+                                crawler.addUrlToSitemap(absoluteUrl);
                             }
                         });
 
@@ -78,7 +80,7 @@ module.exports = function(grunt) {
                 }
             };
 
-            wait = setInterval(finishCrawl, 1000);
+            wait = setInterval(finishCrawl, 30000);
         } catch (e) {
             grunt.log.error(e);
             done(false);
