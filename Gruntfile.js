@@ -39,7 +39,7 @@ module.exports = function(grunt) {
           sitemap: true,
           sitemapDir: 'tmp'
         }
-      },
+      }
     },
 
     // Connect web server.
