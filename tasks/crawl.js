@@ -80,7 +80,7 @@ module.exports = function(grunt) {
                 }
             };
 
-            wait = setInterval(finishCrawl, 30000);
+            wait = setInterval(finishCrawl, 1000);
         } catch (e) {
             grunt.log.error(e);
             done(false);
