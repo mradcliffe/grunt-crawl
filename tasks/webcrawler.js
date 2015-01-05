@@ -253,7 +253,7 @@ Crawler.prototype.getRelativePath = function(url) {
     // Add file suffix for path names and directories.
     if (linkUrl.filename() === "") {
         if (url === this.url) {
-            path = 'index.html';
+            path = '/index.html';
         } else {
             path = path.replace(/\/?$/, '.html');
         }
