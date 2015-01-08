@@ -132,11 +132,11 @@ Crawler.prototype.createSitemap = function() {
  * @returns {Object} this
  */
 Crawler.prototype.getUrls = function(page, depth) {
-    var delay, findUrls;
+    var childDelay, findUrls;
     var self = this;
     var intervalCount = 0;
 
-//    findUrls = function() {
+    findUrls = function() {
         page.evaluate(function() {
             var nav = document.querySelector('a');
 
@@ -146,7 +146,7 @@ Crawler.prototype.getUrls = function(page, depth) {
                 });
             }
         }, function(err, links) {
-//            clearInterval(delay);
+            clearInterval(childDelay);
 
             // Filter links.
             links.filter(function(url) {
@@ -163,15 +163,15 @@ Crawler.prototype.getUrls = function(page, depth) {
                 }
             });
         });
-/*
+
         intervalCount++;
         if (intervalCount > 10) {
-            clearInterval(delay);
+            clearInterval(childDelay);
         }
     };
 
-    delay = setInterval(findUrls, 100);
-*/
+    childDelay = setInterval(findUrls, 100);
+
     return this;
 };
 
@@ -343,7 +343,7 @@ Crawler.prototype.crawl = function (url, depth, ph) {
                                     }
                                 };
 
-                                delay = setInterval(waitForChildren, 1000);
+                                delay = setInterval(waitForChildren, 2000);
                             }
                         }, self.options.readySelector);
 
