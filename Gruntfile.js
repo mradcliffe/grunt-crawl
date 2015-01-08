@@ -39,6 +39,19 @@ module.exports = function(grunt) {
           sitemap: true,
           sitemapDir: 'tmp'
         }
+      },
+      fragment: {
+        options: {
+          baseUrl: 'http://127.0.0.1:9000/angular/',
+          depth: 2,
+          content: true,
+          contentDir: 'tmp/angular',
+          sitemap: true,
+          sitemapDir: 'tmp/angular',
+          followFragment: true,
+          fragmentPrefix: '!',
+          waitDelay: 15000
+        }
       }
     },
 

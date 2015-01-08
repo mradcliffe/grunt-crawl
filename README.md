@@ -33,7 +33,8 @@ grunt.initConfig({
         readySelector: ".main-wrapper",
         depth: 4,
         viewportWidth: 1280,
-        viewportHeight: 1024
+        viewportHeight: 1024,
+        waitDelay: 10000,
       }
     }
   }
@@ -107,6 +108,12 @@ Type: `Integer`
 Default value: `1024`
 
 The height that PhantomJS will use for its viewport.
+
+#### options.waitDelay
+Type: `Integer`
+Default value: `10000`
+
+An interval in seconds to wait for crawling to finish. Useful for larger sites with lots to crawl. Todo: remove this.
 
 ### Usage Examples
 

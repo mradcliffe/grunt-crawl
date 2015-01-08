@@ -30,7 +30,8 @@ module.exports = function(grunt) {
             readySelector: '.main-wrapper',
             depth: 4,
             viewportWidth: 1280,
-            viewportHeight: 1024
+            viewportHeight: 1024,
+            waitDelay: 10000
         });
 
         done = this.async();
@@ -80,7 +81,7 @@ module.exports = function(grunt) {
                 }
             };
 
-            wait = setInterval(finishCrawl, 1000);
+            wait = setInterval(finishCrawl, options.waitDelay);
         } catch (e) {
             grunt.log.error(e);
             done(false);
