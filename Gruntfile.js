@@ -37,7 +37,8 @@ module.exports = function(grunt) {
           content: true,
           contentDir: 'tmp/static',
           sitemap: true,
-          sitemapDir: 'tmp'
+          sitemapDir: 'tmp',
+          exclude: ["ignore.html"]
         }
       },
       fragment: {

@@ -194,6 +194,18 @@ Crawler.prototype.filterUrl = function(url) {
         ret = false;
     }
 
+    // Exclude the path based on regular expression match for user-defined list
+    // of patterns.
+    if (ret && this.options.exclude.length) {
+        ret = this.options.exclude.reduce(function(prev, path) {
+            var regex = new RegExp(path, 'i');
+            if (uri.path().match(regex) !== null) {
+                prev = false;
+            }
+            return prev;
+        }, true);
+    }
+
     return ret;
 };
 

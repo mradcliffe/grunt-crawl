@@ -35,12 +35,13 @@ exports.crawl = {
     test.done();
   },
   simpleContentExists: function(test) {
-    test.expect(4);
+    test.expect(5);
 
     test.ok(grunt.file.exists('tmp/static/index.html'), 'Found static content: tmp/static/index.html');
     test.ok(grunt.file.exists('tmp/static/about.html'), 'Found static content: tmp/static/about.html');
     test.ok(grunt.file.exists('tmp/static/people/me.html'), 'Found static content: tmp/static/people/me.html');
     test.ok(!grunt.file.exists('tmp/static/page.html'), 'Did not find content: tmp/static/page.html');
+    test.ok(!grunt.file.exists('tmp/static/people/ignore.html'), 'Did not find content: tmp/static/people/ignore.html');
 
     test.done();
   },

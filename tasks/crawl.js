@@ -26,6 +26,7 @@ module.exports = function(grunt) {
             followFragment: false,
             fragmentPrefix: '!',
             readySelector: '.main-wrapper',
+            exclude: [],
             depth: 4,
             viewportWidth: 1280,
             viewportHeight: 1024,

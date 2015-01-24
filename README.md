@@ -35,6 +35,7 @@ grunt.initConfig({
         viewportWidth: 1280,
         viewportHeight: 1024,
         waitDelay: 10000,
+        exclude: []
       }
     }
   }
@@ -113,7 +114,13 @@ The height that PhantomJS will use for its viewport.
 Type: `Integer`
 Default value: `10000`
 
-An interval in seconds to wait for crawling to finish. Useful for larger sites with lots to crawl. Todo: remove this.
+An interval in seconds to wait for crawling to finish. Useful for larger sites with lots to crawl, particularly Angular sites with complex and dynamic content binding.
+
+#### options.exclude
+Type: `Array`
+Default value: `[]`
+
+Define relative URI patterns to exclude from being crawled. This is useful for ignoring file downloads.
 
 ### Usage Examples
 
