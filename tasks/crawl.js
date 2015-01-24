@@ -25,7 +25,7 @@ module.exports = function(grunt) {
             sitemapDir: 'www',
             followFragment: false,
             fragmentPrefix: '!',
-            readySelector: '.main-wrapper',
+            readySelector: false,
             exclude: [],
             depth: 4,
             viewportWidth: 1280,

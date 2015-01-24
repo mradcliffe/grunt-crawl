@@ -49,6 +49,7 @@ module.exports = function(grunt) {
           contentDir: 'tmp/angular',
           sitemap: true,
           sitemapDir: 'tmp/angular',
+          readySelector: '.main-wrapper',
           followFragment: true,
           fragmentPrefix: '!'
         }
@@ -84,7 +85,7 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'connect', 'crawl', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'connect', 'crawl:localhost', 'copy', 'crawl:fragment', 'nodeunit:tests']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);

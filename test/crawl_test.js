@@ -45,5 +45,15 @@ exports.crawl = {
 
     test.done();
   },
+  angularContentExists: function(test) {
+    test.expect(5);
 
+    test.ok(grunt.file.exists('tmp/angular/index.html'), 'Found static content: tmp/angular/index.html');
+    test.ok(grunt.file.exists('tmp/angular/about.html'), 'Found static content: tmp/angular/about.html');
+    test.ok(grunt.file.exists('tmp/angular/people.html'), 'Found static content: tmp/angular/people.html');
+    test.ok(grunt.file.exists('tmp/angular/people/me.html'), 'Found static content: tmp/angular/people/me.html');
+    test.ok(grunt.file.exists('tmp/angular/sitemap.xml'), 'Found sitemap.xml: tmp/angular/sitemap.xml');
+
+    test.done();
+  }
 };

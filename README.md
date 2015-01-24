@@ -30,7 +30,6 @@ grunt.initConfig({
         baseUrl: "http://example.com",
         content: true,
         contentDir: "www/static",
-        readySelector: ".main-wrapper",
         depth: 4,
         viewportWidth: 1280,
         viewportHeight: 1024,
@@ -46,9 +45,9 @@ grunt.initConfig({
 
 #### options.baseUrl
 Type: `String`
-Default value: `'http://localhost:9000'`
+Default value: `'http://localhost:9000/'`
 
-The base URL of your web site to crawl.
+The base URL of your web site to crawl. A trailing `/` should be included.
 
 #### options.content
 Type: `Boolean`
@@ -87,16 +86,16 @@ Default value: `!`
 The fragment prefix to use for fragment routing. `!` will look for routes similar to `#!/`. See below for more details.
 
 #### options.readySelector
-Type: `String`
-Default value: `.main-wrapper`
+Type: `Boolean`|`String`
+Default value: `false`
 
-The selector to search for `data-status` attribute on each web page. The `data-status` attribute should be set to `"ready"`. This option is required although for static pages you can set the attribute manually to ready.
+An optional argument to specify a selector to search for `data-status` attribute on each web page. The `data-status` attribute should be set to `"ready"`.
 
 #### options.depth
 Type: `Integer`
 Default value: `4`
 
-The depth limit for the web crawler. Anything greater than 5 may exceed the current interval setting in the task.
+The depth limit for the web crawler. Anything greater than 5 may exceed the default waitDelay option.
 
 #### options.viewportWidth
 Type: `Integer`

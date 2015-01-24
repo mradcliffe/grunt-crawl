@@ -295,12 +295,19 @@ Crawler.prototype.crawl = function(url) {
                 // Evaluate the page for dynamically loaded content and links.
                 waitForPage = function() {
                     page.evaluate(function(s) {
+                        var body;
+                        var html;
 
-                        var body = document.querySelector(s);
+                        if (s === false) {
+                            html = document.documentElement && document.documentElement.outerHTML ? document.documentElement.outerHTML : "";
+                        } else {
+                            body = document.querySelector(s);
 
-                        if ('ready' === body.getAttribute('data-status')) {
-                            return document.documentElement && document.documentElement.outerHTML ? document.documentElement.outerHTML : "";
+                            if ('ready' === body.getAttribute('data-status')) {
+                                html = document.documentElement && document.documentElement.outerHTML ? document.documentElement.outerHTML : "";
+                            }
                         }
+                        return html;
                     }, function(error, documentHtml) {
 
                         var delay, waitForLinks;
