@@ -42,6 +42,6 @@
     "grunt": "~0.4.5"
   },
   "keywords": [
-    "gruntplugin"
+    "gruntplugin", "phantom", "sitemap.xml", "crawler"
   ]
 }
