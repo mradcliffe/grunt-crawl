@@ -1,0 +1,87 @@
+<html ng-app="gruntCrawl">
+  <head>
+    <title>Hello!</title>
+
+    <script src="js/angular.js"></script>
+    <script src="js/angular-route.js"></script>
+
+    <script type="application/javascript">
+      var gruntCrawl = angular.module('gruntCrawl', ['ngRoute', 'gruntCrawlController']);
+      gruntCrawl.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+        $locationProvider.html5Mode(false);
+        $locationProvider.hashPrefix('!');
+
+        $routeProvider
+          .when('/', {
+            templateUrl: 'page.html',
+            controller: 'pageController'
+          })
+          .when('/about', {
+            templateUrl: 'page.html',
+            controller: 'pageController'
+          })
+          .when('/people', {
+            templateUrl: 'people.html',
+            controller: 'listController'
+          })
+          .when('/people/:person', {
+            templateUrl: 'people.html',
+            controller: 'listController'
+          });
+      }]);
+      gruntCrawl.run(['$rootScope', function($rootScope) {
+        var _getTopScope = function() {
+          return $rootScope;
+        }
+        $rootScope.ready = function() {
+          var $scope = _getTopScope();
+          $scope.status = 'ready';
+          if (!$scope.$$phase) $scope.$apply();
+        }
+
+        $rootScope.loading = function() {
+          var $scope = _getTopScope();
+          $scope.status = 'loading';
+          if (!$scope.$$phase) $scope.$apply();
+        }
+      }]);
+      var gruntCrawlController = angular.module('gruntCrawlController', []);
+      gruntCrawlController.controller('pageController', ['$scope', '$location', function($scope, $location) {
+        if ('/about' === $location.path()) {
+          $scope.content = 'This is an about page.';
+        }
+        else {
+          $scope.content = 'Welcome to the home page.';
+        }
+
+        $scope.ready();
+      }]);
+      gruntCrawlController.controller('listController', ['$scope', '$routeParams', function($scope, $routeParams) {
+        $scope.links = new Array();
+        $scope.links.push({"href": '#!/people/me', "title": "Me"});
+        $scope.links.push({"href": '#!/people/sam', "title": "Sam"});
+        $scope.links.push({"href": '#!/people/pat', "title": "Pat"});
+        $scope.links.push({"href": '#!/people/alex', "title": "Alex"});
+
+        if ($routeParams.person !== undefined) {
+          $scope.content = 'This page is about ' + $routeParams.person;
+        } else {
+          $scope.content = 'This is a list of people on a page.';
+        }
+
+        $scope.ready();
+      }]);
+    </script>
+  </head>
+
+  <body class="main-wrapper" data-status="{{status}}">
+     <nav>
+       <ul>
+         <li><a href="#!/">Home</a></li>
+         <li><a href="#!/about">About</a></li>
+         <li><a href="#!/people">People</a></li>
+       </ul>
+     </nav>
+     <div ng-view></div>
+  </body>
+</html>

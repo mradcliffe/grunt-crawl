@@ -25,7 +25,16 @@ module.exports = function(grunt) {
 
     // Before generating any new files, remove any previously-created files.
     clean: {
-      tests: ['tmp']
+      tests: ['tmp', 'test/angular/js']
+    },
+
+    copy: {
+      angular: {
+        files: [
+          {expand: true, cwd: 'node_modules/angular', src: ['*.js'], dest: 'test/angular/js', filter: 'isFile'},
+          {expand: true, cwd: 'node_modules/angular-route', src: ['*.js'], dest: 'test/angular/js', filter: 'isFile'}
+        ]
+      }
     },
 
     // Configuration to be run (and then tested).
@@ -44,7 +53,6 @@ module.exports = function(grunt) {
       fragment: {
         options: {
           baseUrl: 'http://127.0.0.1:9000/angular/',
-          depth: 3,
           content: true,
           contentDir: 'tmp/angular',
           sitemap: true,
@@ -80,12 +88,13 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-connect');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'connect', 'crawl:localhost', 'crawl:fragment', 'nodeunit:tests']);
+  grunt.registerTask('test', ['clean', 'connect', 'crawl:localhost', 'copy', 'crawl:fragment', 'nodeunit:tests']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
