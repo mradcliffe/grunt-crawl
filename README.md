@@ -210,5 +210,7 @@ Rewrite rules for fragment route to static content:
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
+* [![Build Status](https://travis-ci.org/mradcliffe/grunt-crawl.svg?branch=master)](https://travis-ci.org/mradcliffe/grunt-crawl)
+
 ## Release History
 _(Nothing yet)_
