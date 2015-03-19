@@ -1,7 +1,7 @@
 {
   "name": "grunt-crawl",
   "description": "PhantomJS-based web crawler with support for sitemap, static content, and fragment routing.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/mradcliffe/grunt-crawl",
   "author": {
     "name": "Matthew Radcliffe",
