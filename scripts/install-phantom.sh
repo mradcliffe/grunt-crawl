@@ -8,3 +8,5 @@ if [ "$PHANTOM" = "2.0.0" ]; then
 	tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
 	export PATH=$PWD/travis-phantomjs:$PATH
 fi
+
+echo "PhantomJS $PHANTOM installed."
