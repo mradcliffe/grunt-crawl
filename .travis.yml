@@ -1,5 +1,10 @@
 language: node_js
 node_js:
   - "0.10"
+env:
+  - PHANTOM="1.9.0"
+  - PHANTOM="2.0.0"
+before_install:
+  - ./scripts/install-phantom.sh
 before_script:
   - npm install grunt-cli -g

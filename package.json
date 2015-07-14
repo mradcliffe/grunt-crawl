@@ -1,7 +1,7 @@
 {
   "name": "grunt-crawl",
   "description": "PhantomJS-based web crawler with support for sitemap, static content, and fragment routing.",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "homepage": "https://github.com/mradcliffe/grunt-crawl",
   "author": {
     "name": "Matthew Radcliffe",
@@ -29,7 +29,7 @@
   "dependencies": {
     "URIjs": "~1.14.1",
     "data2xml": "~1.2.0",
-    "node-phantom": "git+https://github.com/leobispo/node-phantom#socket_io_version"
+    "node-phantom": "git+https://github.com/mradcliffe/node-phantom#phantom2"
   },
   "devDependencies": {
     "angular": "^1.3.15",
