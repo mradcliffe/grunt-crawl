@@ -1,6 +1,8 @@
 # grunt-crawl
 
-> PhantomJS-based web crawler with support for sitemap, static content, and fragment routing.
+> PhantomJS (1.9.x or 2.0.x) web crawler with support for sitemap, static content, and fragment routing.
+
+* [![Build Status](https://travis-ci.org/mradcliffe/grunt-crawl.svg?branch=master)](https://travis-ci.org/mradcliffe/grunt-crawl)
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -74,10 +76,10 @@ Default value: `www`
 The directory path to write `sitemap.xml`.
 
 #### options.followFragment
-Type: `Boolean`
-Default value: `false`
+Type: `Boolean|String`
+Default value: `''`
 
-A boolean value where `true` will crawl fragment routes as well.
+A boolean value where `true` will crawl fragment routes as well. Unfortunately `false` will break URI.fragment.js for some dumb reason.
 
 #### options.fragmentPrefix
 Type: `String`
@@ -209,8 +211,6 @@ Rewrite rules for fragment route to static content:
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
-* [![Build Status](https://travis-ci.org/mradcliffe/grunt-crawl.svg?branch=master)](https://travis-ci.org/mradcliffe/grunt-crawl)
 
 ## Release History
 _(Nothing yet)_
