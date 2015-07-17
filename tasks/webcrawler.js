@@ -264,7 +264,7 @@ Crawler.prototype.createSnapshot = function (page, path) {
 /**
  * Crawl a url.
  *
- * @param {Object} page page object to call render method.
+ * @param {String} url - The absolute or relative url to crawl.
  */
 Crawler.prototype.crawl = function(url) {
 
