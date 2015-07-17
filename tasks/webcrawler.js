@@ -287,7 +287,7 @@ Crawler.prototype.crawl = function(url) {
                 return false;
             }
 
-            page.viewPortSize = {
+            page.viewportSize = {
                 width: self.options.viewPortWidth,
                 height: self.options.viewPortHeight
             };
