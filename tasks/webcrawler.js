@@ -242,10 +242,23 @@ Crawler.prototype.isUrlRelative = function(uri) {
  * @returns {Boolean} TRUE if url is the same origin as base.
  */
 Crawler.prototype.isUrlSameOrigin = function (uri) {
-        var baseUri = URI(this.baseUrl);
+    var baseUri = URI(this.baseUrl);
 
-        return baseUri.normalizeProtocol().protocol() === uri.normalizeProtocol().protocol() &&
-                     baseUri.normalizeHostname().host() === uri.normalizeHostname().host();
+    return baseUri.normalizeProtocol().protocol() === uri.normalizeProtocol().protocol() &&
+        baseUri.normalizeHostname().host() === uri.normalizeHostname().host();
+};
+
+/**
+ * Render a snapshot of the page with phantom.
+ *
+ * @param {Object} page The page object.
+ * @param {String} path The relative path of the file to snapshot.
+ */
+Crawler.prototype.createSnapshot = function (page, path) {
+    // Only render if options set.
+    if (this.options.render && undefined !== page) {
+        page.render(this.options.renderDir + "/" + this.getStaticFilename(path) + ".png");
+    }
 };
 
 /**
@@ -319,6 +332,9 @@ Crawler.prototype.crawl = function(url) {
 
                         // Add content to url list.
                         self.urls[url].content = documentHtml;
+
+                        // Create a snapshot.
+                        self.createSnapshot(page, url);
 
                         clearInterval(wait);
 

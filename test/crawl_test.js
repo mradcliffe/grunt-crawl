@@ -45,6 +45,15 @@ exports.crawl = {
 
     test.done();
   },
+  captureContentExists: function(test) {
+    test.expect(3);
+
+    test.ok(grunt.file.exists('tmp/capture/index.html.png'), 'Found snapshot: tmp/capture/index.html.png');
+    test.ok(grunt.file.exists('tmp/capture/about.html.png'), 'Found snapshot: tmp/capture/about.html.png');
+    test.ok(grunt.file.exists('tmp/capture/people/me.html.png'), 'Found snapshot: tmp/capture/people/me.html.png');
+
+    test.done();
+  },
   angularContentExists: function(test) {
     test.expect(8);
 
