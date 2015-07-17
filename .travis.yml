@@ -8,3 +8,5 @@ before_install:
   - ./scripts/install-phantom.sh
 before_script:
   - npm install grunt-cli -g
+after_script:
+  - grunt coverage

@@ -80,6 +80,21 @@ module.exports = function(grunt) {
     // Unit tests.
     nodeunit: {
       tests: ['test/*_test.js']
+    },
+
+    // Code coverage.
+    plato: {
+      options: {
+        jshint: false,
+        complexity: {
+          ignoreerrors: true,
+        }
+      },
+      coverage: {
+        files: {
+          'tmp/coverage': ['tasks/**/*.js']
+        }
+      }
     }
 
   });
@@ -93,10 +108,27 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-plato');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'connect', 'crawl:localhost', 'copy', 'crawl:fragment', 'nodeunit:tests']);
+  grunt.registerTask('test', ['clean', 'connect', 'crawl:localhost', 'copy', 'crawl:fragment', 'nodeunit:tests', 'plato']);
+
+  grunt.registerTask('coverage', 'Generate coverage report.', function() {
+    var data, n;
+
+    // Parse the JSON history file created by plato.
+    if (grunt.file.exists('tmp/coverage/report.json')) {
+      data = grunt.file.readJSON('tmp/coverage/report.json');
+
+      grunt.log.subhead("Complexity");
+      data.reports.forEach(function(curr) {
+        grunt.log.oklns(curr.info.file + ': ' + curr.complexity.aggregate.cyclomatic);
+      });
+    } else {
+      grunt.log.error('Unable to generate code coverage report because "tmp/coverage/report.json" is missing.');
+    }
+  });
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
