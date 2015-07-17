@@ -23,6 +23,8 @@ module.exports = function(grunt) {
             contentDir: 'www/static',
             sitemap: false,
             sitemapDir: 'www',
+            render: false,
+            renderDir: 'tmp',
             followFragment: '',
             fragmentPrefix: '!',
             readySelector: false,

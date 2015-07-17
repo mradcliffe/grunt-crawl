@@ -63,6 +63,18 @@ Default value: `www/static`
 
 The directory path to save static content when content saving is enabled.
 
+#### options.render
+Type: `Boolean`
+Default value: `false`
+
+A boolean value where `true` will use Phantom's capture screenshot functionality to generate screen captures of each crawled page at the given viewport size defined.
+
+#### options.renderDir
+Type: `String`
+Default value: `tmp`
+
+The directory path to save screen captures when screen capture is enabled.
+
 #### options.sitemap
 Type: `Boolean`
 Default value: `false`

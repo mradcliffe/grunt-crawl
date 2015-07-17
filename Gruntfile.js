@@ -45,6 +45,8 @@ module.exports = function(grunt) {
           depth: 2,
           content: true,
           contentDir: 'tmp/static',
+          render: true,
+          renderDir: 'tmp/capture',
           sitemap: true,
           sitemapDir: 'tmp',
           exclude: ["ignore.html"]
