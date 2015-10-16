@@ -49,7 +49,7 @@ module.exports = function(grunt) {
 
                 var n, absoluteUrl, filePath, nextUrl;
                 var sitemap = {
-                    _attr: {xmlns: 'https://www.sitemaps.org/schemas/sitemap/0.9'},
+                    _attr: {xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9'},
                     url: []
                 };
 
