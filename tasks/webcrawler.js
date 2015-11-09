@@ -22,8 +22,11 @@ function Crawler(url, depth, options) {
 
     this.createPhantom = function(error, ph) {
         if (error) {
-            ph.exit();
+            if (undefined === ph) {
+                throw 'Phantom is not defined. This probably means that PhantomJS is not installed.';
+            }
 
+            ph.exit();
             throw 'Could not create phantom instance';
         }
 

@@ -1,6 +1,6 @@
 # grunt-crawl
 
-> PhantomJS (1.9.x or 2.0.x) web crawler with support for sitemap, static content, and fragment routing.
+> [PhantomJS](http://phantomjs.org/) (1.9.x or 2.0.x) web crawler with support for sitemap, static content, and fragment routing.
 
 * [![Build Status](https://travis-ci.org/mradcliffe/grunt-crawl.svg?branch=master)](https://travis-ci.org/mradcliffe/grunt-crawl)
 
@@ -18,6 +18,8 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 ```js
 grunt.loadNpmTasks('grunt-crawl');
 ```
+
+PhantomJS is required to run this plugin.
 
 ## The "crawl" task
 
