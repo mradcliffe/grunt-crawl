@@ -1,6 +1,6 @@
 # grunt-crawl
 
-> PhantomJS (1.9.x or 2.0.x) web crawler with support for sitemap, static content, and fragment routing.
+> [PhantomJS](http://phantomjs.org/) (1.9.x or 2.0.x) web crawler with support for sitemap, static content, and fragment routing.
 
 * [![Build Status](https://travis-ci.org/mradcliffe/grunt-crawl.svg?branch=master)](https://travis-ci.org/mradcliffe/grunt-crawl)
 
@@ -19,6 +19,8 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-crawl');
 ```
 
+PhantomJS is required to run this plugin.
+
 ## The "crawl" task
 
 ### Overview
@@ -27,7 +29,7 @@ In your project's Gruntfile, add a section named `crawl` to the data object pass
 ```js
 grunt.initConfig({
   crawl: {
-    live: {
+    myapp: {
       options: {
         baseUrl: "http://example.com",
         content: true,
@@ -62,6 +64,12 @@ Type: `String`
 Default value: `www/static`
 
 The directory path to save static content when content saving is enabled.
+
+### options.readySelector
+Type: `String|Boolean`
+Default value: `false`
+
+The selector that the web crawler will look for a `data-status` attribute with the value `ready`.
 
 #### options.render
 Type: `Boolean`
@@ -173,17 +181,18 @@ In index.html:
 <div ng-view class="main-wrapper" data-status="{{status}}"></div>
 ```
 
-#### Sitemap
+#### Sitemap.xml
 
 ```js
 grunt.initConfig({
   "crawl": {
-    "sitemap": {
+    "myapp": {
+      "baseUrl": "http://example.com",
       "sitemap": true,
       "sitemapDir": "www"
     }
   }
-}
+});
 ```
 
 - Todo: provide a way to prioritize routes. All priorities set the same. Possibly auto-adjust by depth?
@@ -197,11 +206,12 @@ AngularJS and other Javascript apps that depend on fragment routing are supporte
 grunt.initConfig({
   "crawl": {
     "myapp": {
+      "baseUrl": "http://example.com",
       "followFragment": true,
       "fragmentPrefix": "!"
     }
   }
-}
+});
 ```
 
 Rewrite rules for fragment route to static content:
