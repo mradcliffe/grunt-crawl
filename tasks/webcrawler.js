@@ -5,8 +5,8 @@
 var driver = require("node-phantom-promise"),
     phantom = require("phantomjs"),
     q = require("q"),
-    URI = require('URIjs'),
-    URIFragment = require('URIjs/src/URI.fragmentURI'),
+    URI = require('urijs'),
+    URIFragment = require('urijs/src/URI.fragmentURI'),
     document;
 
 function Crawler(url, depth, options) {
