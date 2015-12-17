@@ -5,3 +5,5 @@ tmp
 test/angular/js
 test/angular/js/angular-route.js
 test/angular/js/angular.js
+/nbproject
+.idea

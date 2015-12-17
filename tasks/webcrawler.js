@@ -2,16 +2,14 @@
  * webcrawler.js - PhantomJS based web crawler with support for #! routing.
  */
 
-'use strict';
-
-var phantom = require('node-phantom'),
-URI = require('URIjs'),
-URIFragment = require('URIjs/src/URI.fragmentURI'),
-document;
+var driver = require("node-phantom-promise"),
+    phantom = require("phantomjs"),
+    q = require("q"),
+    URI = require('URIjs'),
+    URIFragment = require('URIjs/src/URI.fragmentURI'),
+    document;
 
 function Crawler(url, depth, options) {
-    var self = this;
-
     this.baseUrl = url;
     this.depth = depth;
     this.options = options;
@@ -19,52 +17,43 @@ function Crawler(url, depth, options) {
     this.crawledUrls = [];
     this.sitemap = {};
     this.phantom = null;
-
-    this.createPhantom = function(error, ph) {
-        if (error) {
-            if (undefined === ph) {
-                throw 'Phantom is not defined. This probably means that PhantomJS is not installed.';
-            }
-
-            ph.exit();
-            throw 'Could not create phantom instance';
-        }
-
-        self.setPhantom(ph);
-    };
 }
 
 /**
  * Start node-phantom.
  *
- * @returns {this}
+ * @returns {Promise}
  */
 Crawler.prototype.startPhantom = function() {
+    var self = this;
 
-    phantom.create(this.createPhantom);
-    return this;
+    return driver.create({path: phantom.path}).then(function (browser) {
+        self.setPhantom(browser);
+        return this;
+    });
 };
 
 /**
- * Stop node-phantom.
+ * Stop phantom.
  *
- * @returns {this{
+ * @returns {this}
  */
 Crawler.prototype.stopPhantom = function() {
 
     this.phantom.exit();
+    this.phantom = null;
     return this;
 };
 
 /**
  * Set the phantom object.
  *
- * @param {Object} ph - The node-phantom object.
+ * @param {Object} ph - The phantom-node-promise browser object.
  * @returns {this}
  */
-Crawler.prototype.setPhantom = function(ph) {
+Crawler.prototype.setPhantom = function(browser) {
 
-    this.phantom = ph;
+    this.phantom = browser;
     return this;
 };
 
@@ -202,7 +191,7 @@ Crawler.prototype.filterUrl = function(url) {
     if (ret && this.options.exclude.length) {
         ret = this.options.exclude.reduce(function(prev, path) {
             var regex = new RegExp(path, 'i');
-            if (uri.path().match(regex) !== null) {
+            if (regex.test(uri.path())) {
                 prev = false;
             }
             return prev;
@@ -222,17 +211,16 @@ Crawler.prototype.filterUrl = function(url) {
  */
 Crawler.prototype.isUrlRelative = function(uri) {
 
-    var ret = false;
-    var furi = uri.fragment(this.options.followFragment);
+    var ret = false,
+        furi;
 
-    if (uri.is('relative')) {
-        if (this.options.followFragment) {
-            uri.fragmentPrefix(this.options.fragmentPrefix);
+    if (this.options.followFragment) {
+        furi = uri.fragment(this.options.followFragment);
+        uri.fragmentPrefix(this.options.fragmentPrefix);
 
-            ret = furi.pathname().length > 0 && furi.pathname() !== '/';
-        } else if (uri.path().length > 0) {
-            ret = true;
-        }
+        ret = furi.pathname().length > 0 && furi.pathname() !== '/';
+    } else if (uri.is('relative') && uri.path().length > 0) {
+        ret = true;
     }
 
     return ret;

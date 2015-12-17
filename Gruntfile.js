@@ -16,7 +16,7 @@ module.exports = function(grunt) {
       all: [
         'Gruntfile.js',
         'tasks/*.js',
-        '<%= nodeunit.tests %>'
+        'tests/*.test.js'
       ],
       options: {
         jshintrc: '.jshintrc'
@@ -77,9 +77,21 @@ module.exports = function(grunt) {
       }
     },
 
-    // Unit tests.
+    // Functional tests.
     nodeunit: {
       tests: ['test/*_test.js']
+    },
+
+    // Unit tests.
+    mochaTest: {
+        test: {
+            options: {
+                reporter: 'spec',
+                quiet: false,
+                clearRequireCache: false
+            },
+            src: ['tests/*.test.js']
+        }
     },
 
     // Code coverage.
@@ -108,11 +120,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-plato');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'connect', 'crawl:localhost', 'copy', 'crawl:fragment', 'nodeunit:tests', 'plato']);
+  // grunt.registerTask('test', ['clean', 'connect', 'crawl:localhost', 'copy', 'crawl:fragment', 'nodeunit:tests', 'plato']);
+  grunt.registerTask('test', ['clean', 'mochaTest', 'plato']);
 
   grunt.registerTask('coverage', 'Generate coverage report.', function() {
     var data, n;
