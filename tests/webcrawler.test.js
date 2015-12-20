@@ -91,11 +91,43 @@ describe("Crawler", function() {
 
     describe("getNextUrl()", function() {
 
-        it("should return an empty array when all URLs crawled");
+        it("should return an empty string when there is nothing to crawl", function() {
 
-        it("should return the next URL that has not been crawled");
+            var crawler = new Crawler("http://localhost:9000", 2, {});
 
-        it("should return the next URL that is not being crawled");
+            assert.equal("", crawler.getNextUrl());
+        });
+
+        it("should return the next URL that has not been crawled", function() {
+
+            var crawler = new Crawler("http://localhost:9000", 2, {});
+
+            crawler
+                .addUrl("http://localhost:9000", 1)
+                .addUrl("/about", 2)
+                .addUrl("/people", 2);
+
+            assert.equal("http://localhost:9000", crawler.getNextUrl());
+
+            crawler.urls["http://localhost:9000"].crawled = true;
+
+            assert.equal("/about", crawler.getNextUrl());
+        });
+
+        it("should return the next URL that is not being crawled", function() {
+
+            var crawler = new Crawler("http://localhost:9000", 2, {});
+
+            crawler
+                .addUrl("http://localhost:9000", 1)
+                .addUrl("/about", 2)
+                .addUrl("/people", 2);
+
+            crawler.urls["http://localhost:9000"].crawled = true;
+            crawler.urls["/about"].crawling = true;
+
+            assert.equal("/people", crawler.getNextUrl());
+        });
     });
 
     describe("getAbsoluteUrl()", function() {
