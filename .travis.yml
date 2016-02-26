@@ -2,8 +2,6 @@ language: node_js
 node_js:
   - "0.12"
   - "4.1"
-env:
-  - PHANTOM="2.0.0"
 before_install:
   - ./scripts/install-phantom.sh
 before_script:
