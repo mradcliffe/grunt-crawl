@@ -77,6 +77,8 @@ Crawler.prototype.setPhantom = function(ph) {
  */
 Crawler.prototype.addUrl = function(url, depth) {
 
+    if(this.urls[url]) return this;
+
     this.urls[url] = {
         crawled: false,
         crawling: false,
@@ -84,6 +86,7 @@ Crawler.prototype.addUrl = function(url, depth) {
         depth: depth + 1,
         content: null
     };
+
     return this;
 };
 
